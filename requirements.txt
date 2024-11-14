@@ -1,5 +1,6 @@
 certifi==2024.8.30
 charset-normalizer==3.4.0
+cvzone==1.6.1
 idna==3.10
 numpy==2.0.2
 opencv-contrib-python==4.10.0.84

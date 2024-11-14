@@ -34,9 +34,10 @@ def checkParkingSpace(imgPro, imgGray):
 
         cvzone.putTextRect(img, str(count), (x, y+height - 10), scale=1.5, thickness=2, offset=0)
 
-        cropGray = imgGray[y:y+height, x:x+width]
-        cars = car_classifier.detectMultiScale(cropGray, 1.4,2)
-        if count < 1700 or len(cars) > 1:
+        # cropGray = imgGray[y:y+height, x:x+width]
+        # cars = car_classifier.detectMultiScale(cropGray, 1.4,2)
+        # print(len(cars))
+        if count < 1700:
             color = (0,255,0)
             thickness = 5
             available_space += 1
@@ -48,7 +49,6 @@ def checkParkingSpace(imgPro, imgGray):
 
         cv2.rectangle(img, pos, (pos[0]+width, pos[1] + height), color, thickness=thickness)
 
-    print (available_space)
 
 def mouseClick(events,x,y,flags,params):
     if events == cv2.EVENT_LBUTTONDOWN:
