@@ -24,10 +24,10 @@ try:
 except:
     posList = []
 
-# car_classifier = cv2.CascadeClassifier("haarcascade_car.xml")
+car_classifier = cv2.CascadeClassifier("haarcascade_car.xml")
 
 def generate_random_string(length=3):
-    return ''.join(random.choices(string.ascii_letters + string.digits, k=length))
+    return ''.join(random.choices(string.ascii_letters + string.digits, k=length)).upper()
 
 def checkParkingSpace(imgPro):
     available_space = 0
@@ -39,15 +39,19 @@ def checkParkingSpace(imgPro):
         # cv2.imshow(str(x+y), imgCrop)
         count = cv2.countNonZero(imgCrop)
 
-        cvzone.putTextRect(img, str(label), (x, y+height - 10), scale=1.5, thickness=2, offset=0)
+        # cars = car_classifier.detectMultiScale(imgPro, 1.1, 3)
+        # print(cars)
+        cvzone.putTextRect(img, str(label), (x, y+height - 10), scale=2.5, thickness=2, offset=0)
         if count < 1700:
             color = (0,255,0)
             thickness = 5
             available_space += 1
-            available_slots_name.append(label)
+            available_slots_name.append({label: "Unoccupied"})
         else:
             color = (0,0,255)
-            thickness = 2
+            thickness = 0
+            available_slots_name.append({label: "Occupied"})
+
 
         cv2.rectangle(img, (pos[0],pos[1]), (pos[0]+width, pos[1] + height), color, thickness=thickness)
 
@@ -122,7 +126,7 @@ while running:
     # cv2.imshow("Dilated", imgThreshold)
 
     cv2.setMouseCallback("Window", mouseClick)
-    # cv2.imwrite("captured_image.jpg", img)
+    cv2.imwrite("captured_image.jpg", img)
     cv2.waitKey(1)
     # cv2.destroyAllWindows()
     #
